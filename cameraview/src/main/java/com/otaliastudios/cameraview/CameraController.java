@@ -2,8 +2,6 @@ package com.otaliastudios.cameraview;
 
 import android.graphics.PointF;
 import android.location.Location;
-
-
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Build;
@@ -15,6 +13,7 @@ import android.support.annotation.WorkerThread;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 abstract class CameraController implements
@@ -65,6 +64,12 @@ abstract class CameraController implements
     protected int mSensorOffset;
     private int mDisplayOffset;
     private int mDeviceOrientation;
+
+    public void setMaxPreviewLength(int maxPreviewLength) {
+        this.maxPreviewLength = maxPreviewLength;
+    }
+
+    protected int maxPreviewLength;
 
     protected boolean mIsCapturingImage = false;
     protected boolean mIsCapturingVideo = false;
@@ -506,6 +511,23 @@ abstract class CameraController implements
     protected final Size computePreviewSize(List<Size> previewSizes) {
         // instead of flipping everything to the view world, we can just flip the
         // surface size to the sensor world
+        List<Size> sizeList = new ArrayList<>(previewSizes);
+        Iterator<Size> iterator = sizeList.iterator();
+        while (iterator.hasNext()){
+            Size size = iterator.next();
+            if(size.getWidth() > maxPreviewLength || size.getHeight() > maxPreviewLength){
+                iterator.remove();
+            }else {
+                LOG.i("remained size:"+size);
+            }
+        }
+        if(sizeList.isEmpty()){
+            LOG.w("sizeList.isEmpty()");
+            sizeList = previewSizes;
+        }
+
+
+
         boolean flip = shouldFlipSizes();
         AspectRatio targetRatio = AspectRatio.of(mPictureSize.getWidth(), mPictureSize.getHeight());
         Size targetMinSize = mPreview.getSurfaceSize();
@@ -520,7 +542,9 @@ abstract class CameraController implements
                 SizeSelectors.and(matchRatio, SizeSelectors.biggest()), // If couldn't match both, match ratio and biggest.
                 SizeSelectors.biggest() // If couldn't match any, take the biggest.
         );
-        Size result = matchAll.select(previewSizes).get(0);
+        List<Size> sizes = matchAll.select(sizeList);
+
+        Size result = sizes.get(0);
         LOG.i("computePreviewSize:", "result:", result, "flip:", flip);
         return result;
     }

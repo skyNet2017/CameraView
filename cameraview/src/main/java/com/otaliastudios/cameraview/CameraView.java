@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Lifecycling;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -36,10 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static android.view.View.MeasureSpec.AT_MOST;
-import static android.view.View.MeasureSpec.EXACTLY;
-import static android.view.View.MeasureSpec.UNSPECIFIED;
-
+import static android.view.View.MeasureSpec.*;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 
@@ -1044,6 +1040,9 @@ public class CameraView extends FrameLayout implements LifecycleObserver {
         mCameraController.setPictureSizeSelector(selector);
     }
 
+    public void setMaxPreviewLength(int maxPreviewLength) {
+        mCameraController.setMaxPreviewLength(maxPreviewLength);
+    }
 
     /**
      * Sets video recording quality. This is not guaranteed to be supported by current device.

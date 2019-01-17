@@ -12,13 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Toast;
-
-import com.otaliastudios.cameraview.CameraListener;
-import com.otaliastudios.cameraview.CameraLogger;
-import com.otaliastudios.cameraview.CameraOptions;
-import com.otaliastudios.cameraview.CameraView;
-import com.otaliastudios.cameraview.SessionType;
-import com.otaliastudios.cameraview.Size;
+import com.otaliastudios.cameraview.*;
 
 import java.io.File;
 
@@ -55,6 +49,8 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                 onVideo(video);
             }
         });
+
+       camera.setMaxPreviewLength(800);
 
         findViewById(R.id.edit).setOnClickListener(this);
         findViewById(R.id.capturePhoto).setOnClickListener(this);
