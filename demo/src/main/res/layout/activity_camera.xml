@@ -80,6 +80,17 @@
             android:layout_height="56dp"
             android:background="@drawable/background"
             app:srcCompat="@drawable/ic_switch" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/toggleCamera2"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/background"
+            app:srcCompat="@drawable/ic_switch" />
     </LinearLayout>
 
     <!-- Edit -->

@@ -1040,8 +1040,8 @@ public class CameraView extends FrameLayout implements LifecycleObserver {
         mCameraController.setPictureSizeSelector(selector);
     }
 
-    public void setMaxPreviewLength(int maxPreviewLength) {
-        mCameraController.setMaxPreviewLength(maxPreviewLength);
+    public void setMaxPreviewLength(int maxPreviewLength,boolean forceReFreshCamera) {
+        mCameraController.setMaxPreviewLength(maxPreviewLength,forceReFreshCamera);
     }
 
     /**

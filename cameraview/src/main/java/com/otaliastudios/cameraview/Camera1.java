@@ -103,6 +103,30 @@ class Camera1 extends CameraController implements Camera.PreviewCallback, Camera
         });
     }
 
+    @Override
+    public void setMaxPreviewLength(final int maxPreviewLength,boolean forceReFreshCamera) {
+        this.maxPreviewLength = maxPreviewLength;
+        if(!forceReFreshCamera){
+            return;
+        }
+        schedule(null, true, new Runnable() {
+            @Override
+            public void run() {
+                LOG.i("setMaxPreviewLength, maxPreviewLength ", maxPreviewLength);
+                // Compute a new camera preview size.
+                Size newSize = computePreviewSize(sizesFromList(mCamera.getParameters().getSupportedPreviewSizes()));
+                if (newSize.equals(mPreviewSize)) return;
+
+                // Apply.
+                LOG.i("onSurfaceChanged:", "Computed a new preview size. Going on.");
+                mPreviewSize = newSize;
+                mCamera.stopPreview();
+                applySizesAndStartPreview("onSurfaceChanged:");
+            }
+        });
+
+    }
+
     private boolean shouldBindToSurface() {
         return isCameraAvailable() && mPreview != null && mPreview.isReady() && !mIsBound;
     }

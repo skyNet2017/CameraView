@@ -50,12 +50,13 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-       camera.setMaxPreviewLength(800);
+       camera.setMaxPreviewLength(800,false);
 
         findViewById(R.id.edit).setOnClickListener(this);
         findViewById(R.id.capturePhoto).setOnClickListener(this);
         findViewById(R.id.captureVideo).setOnClickListener(this);
         findViewById(R.id.toggleCamera).setOnClickListener(this);
+        findViewById(R.id.toggleCamera2).setOnClickListener(this);
 
         controlPanel = findViewById(R.id.controls);
         ViewGroup group = (ViewGroup) controlPanel.getChildAt(0);
@@ -125,6 +126,9 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.capturePhoto: capturePhoto(); break;
             case R.id.captureVideo: captureVideo(); break;
             case R.id.toggleCamera: toggleCamera(); break;
+            case R.id.toggleCamera2: {
+                camera.setMaxPreviewLength(600,true);
+            } break;
         }
     }
 

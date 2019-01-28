@@ -65,7 +65,7 @@ abstract class CameraController implements
     private int mDisplayOffset;
     private int mDeviceOrientation;
 
-    public void setMaxPreviewLength(int maxPreviewLength) {
+    public void setMaxPreviewLength(int maxPreviewLength,boolean forceReFreshCamera) {
         this.maxPreviewLength = maxPreviewLength;
     }
 
